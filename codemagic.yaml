@@ -7,17 +7,16 @@ workflows:
       groups:
         - app_store
       vars:
-        XCODE_WORKSPACE: "ios/ZapLynx.xcworkspace"
-        XCODE_SCHEME: "ZapLynx"
         BUNDLE_ID: "com.zaplynxpay.app"
       node: 20.11.0
       xcode: latest
       cocoapods: default
     scripts:
-           - name: Run Expo prebuild (generates ios/ folder)
+      - name: Install npm dependencies
         script: |
-          export CI=1
-          npx expo prebuild --platform ios --clean
+          npm install
+          # Garante que expo-notifications esteja instalado (referenciado em app.json plugins)
+          npm install expo-notifications --save
 
       - name: Install Expo CLI
         script: |
@@ -37,7 +36,8 @@ workflows:
 
       - name: Run Expo prebuild (generates ios/ folder)
         script: |
-          npx expo prebuild --platform ios --clean --non-interactive
+          export CI=1
+          npx expo prebuild --platform ios --clean
 
       - name: Detect Xcode workspace and scheme
         script: |
