@@ -14,7 +14,10 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.zaplynx.app",
-      "buildNumber": "1"
+      "buildNumber": "2",
+      "infoPlist": {
+        "UIBackgroundModes": ["remote-notification"]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +27,19 @@
       "package": "com.zaplynx.app"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-notifications",
+        {
+          "sounds": [
+            "./assets/sounds/venda_aprovada.mp3",
+            "./assets/sounds/venda_pendente.mp3",
+            "./assets/sounds/venda_recusada.mp3",
+            "./assets/sounds/saque_aprovado.mp3",
+            "./assets/sounds/relatorio.mp3"
+          ]
+        }
+      ]
     ],
     "scheme": "zaplynx",
     "backgroundColor": "#0a0814"
