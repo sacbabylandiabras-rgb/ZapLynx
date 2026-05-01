@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "ZapLynx",
+    "slug": "zaplynx-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0a0814"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.zaplynx.app",
+      "buildNumber": "1"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0a0814"
+      },
+      "package": "com.zaplynx.app"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "scheme": "zaplynx",
+    "backgroundColor": "#0a0814"
+  }
+}
