@@ -14,9 +14,10 @@ workflows:
       xcode: latest
       cocoapods: default
     scripts:
-      - name: Install npm dependencies
+           - name: Run Expo prebuild (generates ios/ folder)
         script: |
-          npm install
+          export CI=1
+          npx expo prebuild --platform ios --clean
 
       - name: Install Expo CLI
         script: |
