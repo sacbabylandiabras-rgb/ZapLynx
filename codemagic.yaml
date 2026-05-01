@@ -1,0 +1,49 @@
+workflows:
+  ios-expo-app-store:
+    name: iOS Expo → App Store
+    max_build_duration: 90
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: zaplynx_api_key
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.zaplynxpay.app
+      vars:
+        APP_STORE_APP_ID: 6761859554
+        BUNDLE_ID: com.zaplynxpay.app
+        XCODE_WORKSPACE: "ios/ZapLynxPay.xcworkspace"
+        XCODE_SCHEME: "ZapLynxPay"
+      node: 20
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install --legacy-peer-deps
+      - name: Expo prebuild (gera pasta ios/)
+        script: |
+          npx expo prebuild --platform ios --clean --no-install
+      - name: Install CocoaPods
+        script: |
+          cd ios && pod install
+      - name: Set bundle id
+        script: |
+          cd ios && agvtool new-marketing-version 1.0.1
+          cd ios && agvtool new-version -all $(($BUILD_NUMBER + 1))
+      - name: Set up signing
+        script: |
+          xcode-project use-profiles
+      - name: Build ipa
+        script: |
+          xcode-project build-ipa \
+            --workspace "$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        submit_to_app_store: false
